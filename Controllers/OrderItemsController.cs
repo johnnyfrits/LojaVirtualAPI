@@ -28,16 +28,17 @@ namespace LojaVirtualAPI.Controllers
 
 		// GET: api/OrderItems/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<OrderItem>> GetOrderItem(int id)
+		public async Task<ActionResult<OrderItemDTO>> GetOrderItem(int id)
 		{
-			var orderItem = await _context.OrderItem.FindAsync(id);
+			var orderItem = await _context.OrderItem.Include(o => o.Product)
+													.FirstOrDefaultAsync(o => o.Id == id);
 
 			if (orderItem == null)
 			{
 				return NotFound();
 			}
 
-			return orderItem;
+			return OrderItemToDTO(orderItem);
 		}
 
 		// PUT: api/OrderItems/5
@@ -124,6 +125,23 @@ namespace LojaVirtualAPI.Controllers
 			}
 
 			return orderItemsDTO;
+		}
+
+		public static OrderItemDTO OrderItemToDTO(OrderItem orderItem)
+		{
+			var orderItemDTO = new OrderItemDTO
+			{
+				Id          = orderItem.Id,
+				OrderId     = orderItem.OrderId,
+				ProductId   = orderItem.ProductId,
+				ProductName = orderItem.Product.Name,
+				Price       = orderItem.Price,
+				Quantity    = orderItem.Quantity,
+				Total       = orderItem.Total
+			};
+
+
+			return orderItemDTO;
 		}
 	}
 }

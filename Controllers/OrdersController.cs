@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LojaVirtualAPI.Data;
@@ -32,18 +33,19 @@ namespace LojaVirtualAPI.Controllers
 
 		// GET: api/Order/5
 		[HttpGet("{id}")]
-		public async Task<ActionResult<Order>> GetOrder(int id)
+		public async Task<ActionResult<OrderDTO>> GetOrder(int id)
 		{
 			var order = await _context.Order.Include(o => o.OrderItem)
+											.ThenInclude(i => i.Product)
 											.Include(o => o.Customer)
-											.FirstOrDefaultAsync( o => o.Id == id);
+											.FirstOrDefaultAsync(o => o.Id == id);
 
 			if (order == null)
 			{
 				return NotFound();
 			}
 
-			return order;
+			return OrderToDTO(order);
 		}
 
 		// PUT: api/Order/5
@@ -82,7 +84,10 @@ namespace LojaVirtualAPI.Controllers
 		[HttpPost]
 		public async Task<ActionResult<Order>> PostOrder(Order order)
 		{
+			order.Date = DateTime.Now;
+
 			_context.Order.Add(order);
+
 			await _context.SaveChangesAsync();
 
 			return CreatedAtAction("GetOrder", new { id = order.Id }, order);

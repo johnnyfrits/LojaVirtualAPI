@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LojaVirtualAPI.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("[controller]")]
 	[ApiController]
 	public class OrdersController : ControllerBase
 	{
@@ -20,7 +20,7 @@ namespace LojaVirtualAPI.Controllers
 			_context = context;
 		}
 
-		// GET: api/Order
+		// GET: Order
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrder()
 		{
@@ -31,7 +31,7 @@ namespace LojaVirtualAPI.Controllers
 									   .ToListAsync();
 		}
 
-		// GET: api/Order/5
+		// GET: Order/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<OrderDTO>> GetOrder(int id)
 		{
@@ -48,7 +48,7 @@ namespace LojaVirtualAPI.Controllers
 			return OrderToDTO(order);
 		}
 
-		// PUT: api/Order/5
+		// PUT: Order/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutOrder(int id, Order order)
@@ -79,7 +79,7 @@ namespace LojaVirtualAPI.Controllers
 			return NoContent();
 		}
 
-		// POST: api/Order
+		// POST: Order
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
 		public async Task<ActionResult<Order>> PostOrder(Order order)
@@ -93,7 +93,7 @@ namespace LojaVirtualAPI.Controllers
 			return CreatedAtAction("GetOrder", new { id = order.Id }, order);
 		}
 
-		// DELETE: api/Order/5
+		// DELETE: Order/5
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteOrder(int id)
 		{

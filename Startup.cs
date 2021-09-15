@@ -37,9 +37,10 @@ namespace LojaVirtualAPI
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			app.UseCors(options =>
-				options.WithOrigins("http://localhost:4200")
+				options//.WithOrigins("http://localhost:4200")
 					   .AllowAnyMethod()
 					   .AllowAnyHeader()
+					   .AllowAnyOrigin()
 					   );
 
 			if (env.IsDevelopment())

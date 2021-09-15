@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LojaVirtualAPI.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("[controller]")]
 	[ApiController]
 	public class OrderItemsController : ControllerBase
 	{
@@ -19,14 +19,14 @@ namespace LojaVirtualAPI.Controllers
 			_context = context;
 		}
 
-		// GET: api/OrderItems
+		// GET: OrderItems
 		[HttpGet]
 		public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItem()
 		{
 			return await _context.OrderItem.ToListAsync();
 		}
 
-		// GET: api/OrderItems/5
+		// GET: OrderItems/5
 		[HttpGet("{id}")]
 		public async Task<ActionResult<OrderItemDTO>> GetOrderItem(int id)
 		{
@@ -41,7 +41,7 @@ namespace LojaVirtualAPI.Controllers
 			return OrderItemToDTO(orderItem);
 		}
 
-		// PUT: api/OrderItems/5
+		// PUT: OrderItems/5
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPut("{id}")]
 		public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
@@ -72,7 +72,7 @@ namespace LojaVirtualAPI.Controllers
 			return NoContent();
 		}
 
-		// POST: api/OrderItems
+		// POST: OrderItems
 		// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 		[HttpPost]
 		public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
@@ -83,7 +83,7 @@ namespace LojaVirtualAPI.Controllers
 			return CreatedAtAction("GetOrderItem", new { id = orderItem.Id }, orderItem);
 		}
 
-		// DELETE: api/OrderItems/5
+		// DELETE: OrderItems/5
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteOrderItem(int id)
 		{
